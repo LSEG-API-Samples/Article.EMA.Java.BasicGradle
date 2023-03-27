@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_DIR" value="./logs/" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder>
+        <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+      </encoder>
+    </appender>
+    
+    <!-- <appender name="FILE_Consumer" class="ch.qos.logback.core.FileAppender">
+      <file>${LOG_DIR}/consumer.log</file>
+      <append>true</append>
+      <encoder>
+          <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+      </encoder>
+    </appender> 
+
+    <appender name="FILE_IProvider" class="ch.qos.logback.core.FileAppender">
+      <file>${LOG_DIR}/provider.log</file>
+      <append>true</append>
+      <encoder>
+          <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+      </encoder>
+    </appender> 
+
+    <appender name="FILE_CloudConsumer" class="ch.qos.logback.core.FileAppender">
+      <file>${LOG_DIR}/cloudconsumer.log</file>
+      <append>true</append>
+      <encoder>
+          <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+      </encoder>
+    </appender> 
+
+    <appender name="FILE_API" class="ch.qos.logback.core.FileAppender">
+      <file>${LOG_DIR}/ema.log</file>
+      <append>true</append>
+      <encoder>
+          <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+      </encoder>
+    </appender> 
+
+    <appender name="FILE_REST" class="ch.qos.logback.core.FileAppender">
+      <file>${LOG_DIR}/rest.log</file>
+      <append>true</append>
+      <encoder>
+          <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+      </encoder>
+    </appender>  -->
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+      <file>${LOG_DIR}/api.log</file>
+      <append>true</append>
+      <encoder>
+          <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+      </encoder>
+  </appender>
+
+  <root name="com.refinitiv.ema" level="TRACE">
+      <!--<appender-ref ref="STDOUT" />-->
+      <appender-ref ref="FILE" /> 
+  </root>
+
+  <root name="com.refinitiv.ema" level="INFO">
+      <appender-ref ref="STDOUT" />
+  </root>
+
+  <!-- com.refinitiv.eta.valueadd.reactor.RestReactor -->
+  <root name="com.refinitiv.eta.valueadd" level="TRACE">
+    <appender-ref ref="FILE" /> 
+  </root>
+
+    <!--
+    <logger name="com.com.refinitiv.eta.valueadd.reactor.RestReactor" level="TRACE">
+      <appender-ref ref="FILE_REST" /> 
+    </logger>
+
+    <logger name="com.refinitiv.ema" level="TRACE">
+      <appender-ref ref="FILE_API" /> 
+    </logger>
+
+    <logger name="com.refinitiv.ema.examples.localconsumer" level="INFO"> 
+        <appender-ref ref="FILE_Consumer" /> 
+    </logger> 
+
+    <logger name="com.refinitiv.ema.examples.cloudconsumer" level="INFO"> 
+      <appender-ref ref="FILE_CloudConsumer" /> 
+  </logger> 
+
+    <logger name="com.refinitiv.ema.examples.iprovider" level="INFO"> 
+      <appender-ref ref="FILE_IProvider" /> 
+  </logger> 
+  
+    <root level="debug">
+      <appender-ref ref="STDOUT" />
+    </root>
+  -->
+</configuration>
