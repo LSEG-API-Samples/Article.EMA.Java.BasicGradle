@@ -13,11 +13,12 @@
 
 The SDK has been released on the [Maven Central Repository](https://central.sonatype.com/) to support the modern Java development life cycle since the RTSDK Java (formerly known as Elektron SDK) version 1.2. The Maven Central Repository supported also lets SDK compatibilities with the Java build automation tools like [Gradle](https://gradle.org/) and [Apache Maven](https://maven.apache.org/). This helps Java developers to build RTSDK Java applications, manage its dependencies (Java Developers do not need to manually manage different versions of jar files anymore), and better collaboration in the team.
 
-This example project shows how to create the EMA Java project with a simple Gradle configuration. 
+The RTSDK Java package comes with Gradle build tool supported by default. However, the included Gradle configuration files are very complex for supporting the SDK multiple APIs (EMA and ETA), and use cases (Core API code, examples, ValueAdd package, etc). If developers want to use Gradle, the RTSDK Java's Gradle setings might not be a good starting point for them.
 
-## <a id="rebrand"></a>IMPORTANT Rebranding Announcement: 
+That is why I am creating this project to show how to use a simple Gradle configuration to work with the EMA Java API. Existing developers who are currently using Gradle also understand how to integrate RTSDK Java into their Gradle project.
 
-Starting with version RTSDK 2.0.0.L1 (same as EMA/ETA 3.6.0.L1), there are namespace changes and library name changes. Please note that all interfaces remain the same as prior releases of RTSDK and Elektron SDK and will remain fully wire compatible. Along with RTSDK 2.X version, a [REBRAND.md](https://github.com/Refinitiv/Real-Time-SDK/blob/master/REBRAND.md) is published to detail the impact to existing applications and how to quickly adapt to the re-branded libraries. Existing applications will continue to work indefinitely as-is.  Applications should be proactively rebranded to be able to utilize new features, security updates, or fixes post 2.X release. Please see [PCN](https://my.refinitiv.com/content/mytr/en/pcnpage/12072.html?_ga=2.103280071.632863608.1606731450-325683966.1598503157) for more details on support. 
+Note: 
+- This article is based on EMA Java version 3.7.0 L1 (RTSDK Java Edition 2.1.0 L1) and Gradle version 7.3.3
 
 ## <a id="why_gradle"></a>Why you need build automation tool
 
@@ -35,8 +36,45 @@ $>java -cp .;%EMAJ_HOME%\Libs\ema-<version>.jar;%ETAJ_HOME%\Libs\eta-<version>.j
 
 The example above is just for running the EMA Java application, the real development project needs to connect to more services,  which means the project needs more jar files, configuration files, etc to manage. This makes the development project hard to set up and hard to collaborate among peers.
 
-The build automation tool can help simplify all of this complexity.
+The build automation tool can help simplify all of this complexity by helps team manage the project dependencies, standardize project structure, and lets developers compile, run, and test the application with a few command.
 
 ## <a id="what_gradle"></a>What is Gradle?
+
+[Gradle](https://gradle.org/) is the multi-language open-source build automation tool. It helps developers and the team to organize the project structure, manage dependencies, process development tasks such as running the application, packaing/publishing, testing, and much more. The tool is designed for multi-project builds, aims for high performance, supports multiple planforms (runs on the JVM), supports custom tasks and plugins, and fully IDE supported.
+
+Gradle is the official build tool for Android development platform. 
+
+## <a id="gradle_layout"></a>Gradle Standard Directory Layout
+
+By default, the Gradle project uses the following directory layout to standardize the folder structure (as of Apr 2023, Gradle 7.3.3).
+
+```
+.
+├── projectOne
+│   ├── build.gradle
+│   └── src
+│       ├── main
+│       │   └── java
+│       │       └── com
+│       │           └── enterprise
+│       │               ├── Deploy.java
+│       │               └── DeploymentPlugin.java
+│       └── test
+│           └── java
+│               └── com
+│                   └── enterprise
+│                       └── DeploymentPluginTest.java
+├── settings.gradle
+├── projectTwo
+│   └── build.gradle
+└── projectThree
+    └── build.gradle
+```
+
+https://docs.gradle.org/7.3.3/userguide/organizing_gradle_projects.html
+
+## <a id="gradle_config"></a>Gradle build file
+
+While [Apache Maven](https://maven.apache.org/) uses XML for the project configuration, Gradle uses [Groovy](https://groovy-lang.org/) and [Kotlin](https://kotlinlang.org/) domain-specific language for the project configuration instead.
 
 TBD
