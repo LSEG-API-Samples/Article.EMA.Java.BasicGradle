@@ -18,7 +18,7 @@ The RTSDK Java package comes with Gradle build tool supported by default. Howeve
 That is why I am creating this project to show how to use a simple Gradle configuration to work with the EMA Java API. Existing developers who are currently using Gradle also understand how to integrate RTSDK Java into their Gradle project.
 
 Note: 
-- This article is based on EMA Java version 3.7.0 L1 (RTSDK Java Edition 2.1.0 L1) and Gradle version 7.3.3
+- This article is based on EMA Java version 3.7.0 L1 (RTSDK Java Edition 2.1.0 L1) and Gradle version 7.3.3 (using Grooy DSL)
 
 ## <a id="why_gradle"></a>Why you need build automation tool
 
@@ -36,7 +36,61 @@ $>java -cp .;%EMAJ_HOME%\Libs\ema-<version>.jar;%ETAJ_HOME%\Libs\eta-<version>.j
 
 The example above is just for running the EMA Java application, the real development project needs to connect to more services,  which means the project needs more jar files, configuration files, etc to manage. This makes the development project hard to set up and hard to collaborate among peers.
 
-The build automation tool can help simplify all of this complexity by helps team manage the project dependencies, standardize project structure, and lets developers compile, run, and test the application with a few command.
+The build automation tool can help simplify all of this complexity by helps team manage the project dependencies, standardize project structure with a simple configuration setting as follows:
+
+``` Grovy
+// tag::dependencies[]
+dependencies {
+    // This dependency is used by the application.
+    implementation 'com.refinitiv.ema:ema:3.7.0.0'
+}
+```
+And it lets developers compile, run, and test the application easier command.
+
+``` Bash
+$> gradlew run
+```
+## Prerequisite
+
+Before I am going further, there is some prerequisite, dependencies software and libraries that the project is needed.
+
+
+### Java SDK
+
+Firstly, you need Java SDK. Please check for the supported Java version from the [API Compatibility Matrix](https://developers.refinitiv.com/en/api-catalog/refinitiv-real-time-opnsrc/rt-sdk-java/documentation#api-compatibility-matrix) page. 
+
+I am using the Open JDK version 11 in this project (as of April 2023).
+
+### Gradle
+
+Next, the [Gradle](https://gradle.org/) build automation tool. Please follow [Gradle installation guide document](https://gradle.org/install/).
+
+### Gradle Wrapper version 7.3.3
+
+Basically, developers use the [Gradle Wrapper](https://docs.gradle.org/7.3.3/userguide/gradle_wrapper.html) to interact with Gradle build. The Wrapper (```gradlew``` and ```gradlew.bat```) is a script that invokes a declared version of Gradle, downloading it beforehand if necessary. 
+
+This project uses the Gradle Wrapper version 7.3.3 (and above). You can check the current Gradle Wrapper version from the following command:
+
+``` Bash
+$> gradlew --version
+```
+
+If your Gradle Wrapper is older than version 7.3.3, you can update the Wrapper with the following command:
+
+```  Bash
+$> gradlew wrapper --gradle-version=7.3.3
+```
+### Access to the Refinitiv Real-Time Optimized
+
+This project uses [Customer Identity and Access Management (CIAM) ](https://developers.refinitiv.com/en/article-catalog/article/changes-to-customer-access-and-identity-management--refinitiv-re) (aka Version 2 Authentication) - Client Credentials Grant Model to connect to the Refinitiv Real-Time Optimized (RTO).
+
+Please contact your Refinitiv's representative to help you with the RTO account and services.
+
+Note: This is for the *CloudConsumer* example only.
+
+### Access to Refinitiv Real-Time Distribution System
+
+Note: This is for the *LocalConsumer* example only. Please contact your Market Data team to help you with the Refinitiv Real-Time Distribution System (RTDS).
 
 ## <a id="what_gradle"></a>What is Gradle?
 
@@ -44,36 +98,44 @@ The build automation tool can help simplify all of this complexity by helps team
 
 Gradle is the official build tool for Android development platform. 
 
-## <a id="gradle_layout"></a>Gradle Standard Directory Layout
+## <a id="gradle_layout"></a>Project Sturcture 
 
-By default, the Gradle project uses the following directory layout to standardize the folder structure (as of Apr 2023, Gradle 7.3.3).
+Gradle is designed for multi-projects develpment. A recommend structure consists of one root project, and one or more subprojects (the [RTSDK Java](https://github.com/Refinitiv/Real-Time-SDK/tree/master/Java) uses the same structure too). The folder diagram is as follow:
 
 ```
 .
-├── projectOne
-│   ├── build.gradle
-│   └── src
-│       ├── main
-│       │   └── java
-│       │       └── com
-│       │           └── enterprise
-│       │               ├── Deploy.java
-│       │               └── DeploymentPlugin.java
-│       └── test
-│           └── java
-│               └── com
-│                   └── enterprise
-│                       └── DeploymentPluginTest.java
-├── settings.gradle
-├── projectTwo
-│   └── build.gradle
-└── projectThree
-    └── build.gradle
+├── subproject
+│   ...
+│   ├── build.gradle
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── ...
+│       │   └── resources
+│       │       └── ...
+│       └── test
+│       	   └── resources
+│       	      └── ...
+└── settings.gradle
 ```
+- *&lt;root&gt;/settings.gradle*: Defined the subprojects to include. 
+- *&lt;root&gt;/&lt;subproject&gt;/build.gradle*: Subproject configruration
+- *&lt;root&gt;/&lt;subproject&gt;/src/main/java*: Application/Library sources
+- *&lt;root&gt;/&lt;subproject&gt;/src/main/resources*:	Application/Library resources
+- *&lt;root&gt;/&lt;subproject&gt;/src/test/java*:	Test sources
+- *&lt;root&gt;/&lt;subproject&gt;/src/test/resources*:	Test resources
+- *&lt;root&gt;/LICENSE.txt*:	Project's license
+- *&lt;root&gt;/README.txt*:	Project's readme
 
-https://docs.gradle.org/7.3.3/userguide/organizing_gradle_projects.html
+Please be noticed that the root project does not have a Gradle build file, only a ```settings.gradle``` file that defines the subprojects to include.
 
-## <a id="gradle_config"></a>Gradle build file
+If you are familiar with Maven, the Gradle project layout is mostly indentical to [Maven project](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html).
+
+For more detail on Gradle project layout, please check the following resources:
+- [Structuring and Building a Software Component with Gradle](https://docs.gradle.org/7.3.3/userguide/multi_project_builds.html)
+- [Organizing Gradle Projects](https://docs.gradle.org/7.3.3/userguide/organizing_gradle_projects.html)
+
+## <a id="gradle_config"></a>Gradle build file setting for EMA Java
 
 While [Apache Maven](https://maven.apache.org/) uses XML for the project configuration, Gradle uses [Groovy](https://groovy-lang.org/) and [Kotlin](https://kotlinlang.org/) domain-specific language for the project configuration instead.
 
