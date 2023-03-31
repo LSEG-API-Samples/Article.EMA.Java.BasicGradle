@@ -158,14 +158,58 @@ Note: If the project uses [Kotlin](https://kotlinlang.org/) DSL, this file is ``
 
 Each subprject contains the ```build.gradle``` or ```build.gradle.kts``` file. It is the project's configuration. The file uses [Groovy](https://groovy-lang.org/) (default option) and [Kotlin](https://kotlinlang.org/) DSL format. 
 
-
+The file contains all project configurations such as project type, Application main class, Java compilation options, etc. The equivalent file in Maven is the ```pom.xml``` file. 
 
 Example:
 
-```
+``` groovy
+plugins {
+    id 'java'
+    id 'application'
+   
+}
+
+compileJava {
+    options.release = 11
+}
+
+version = '1.0'
+
+application {
+    // Define the main class for the application
+    mainClassName = 'com.refinitiv.ema.examples.localconsumer.Consumer'
+}
 
 ```
 
-While [Apache Maven](https://maven.apache.org/) uses XML for the project configuration, Gradle uses [Groovy](https://groovy-lang.org/) and [Kotlin](https://kotlinlang.org/) domain-specific language for the project configuration instead.
+The brief information of each ```build.gradle``` configuration function are as follows:
+- ```plugins```: Set the project type to Gradle for applying specific features (like compile Java Code). This is Java project that creats an executable JVM application, so I am setting *java* and *application* plugins
+- ```compileJava```: Set the compiler option. I am setting ```options.release = 11``` for targetting the compiled class(s) to compatible with Java 11
+- ```version```: Set the project version 
+- ```application```: Set the *application* plugin properties. I am setting the project main class as *com.refinitiv.ema.examples.localconsumer.Consumer* (based on the EMA Java Consumer 100)
+
+You can specify the following EMA Java application dependencies in Gradle build.gradle file. The EMA Java is the message-level API built on top of the ETA Java (Transport API), Gradle can automatic pull all dependency artifacts within Maven central for the application.
+
+``` groovy
+plugins {
+    id 'java'
+    id 'application'  
+}
+...
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // This dependency is used by the application.
+    implementation 'com.refinitiv.ema:ema:3.7.0.0'
+}
+```
+
+The ```repositories``` function specifies where to look for the module that we declare as dependencies.  The ```dependencies``` specifies the libraies IDs, the ```implementation``` property mean the project uses EMA for both compilation and runtime.
+
+Please see more detail on the following pages:
+- [Build Java and JVM projects](https://docs.gradle.org/7.3.3/userguide/building_java_projects.html)
+- [Dependency Management Terminology](https://docs.gradle.org/7.3.3/userguide/dependency_management_terminology.html#dependency_management_terminology)
 
 TBD
