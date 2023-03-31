@@ -104,26 +104,47 @@ Gradle is designed for multi-projects develpment. A recommend structure consists
 
 ```
 .
-├── ema
-│   ...
+├── LICENSE.md
+├── README.md
+├── ema_app
+│   ├── EmaConfig.xml
 │   ├── build.gradle
+│   ├── etc
+│   │   └── ...
 │   └── src
 │       ├── main
 │       │   ├── java
-│       │   │   └── ...
+│       │   │   └── com
+│       │   │       └── refinitiv
+│       │   │           └── ema
+│       │   │               └── examples
+│       │   │                   ├── cloudconsumer
+│       │   │                   │   └── Consumer.java
+│       │   │                   └── localconsumer
+│       │   │                       └── Consumer.java
 │       │   └── resources
-│       │       └── ...
+│       │       └── logback.xml
 │       └── test
 │       	   └── resources
 │       	      └── ...
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew
+├── gradlew.bat
 └── settings.gradle
 ```
+
 - *&lt;root&gt;/settings.gradle*: Defined the subprojects to include. 
 - *&lt;root&gt;/&lt;subproject&gt;/build.gradle*: Subproject configruration
 - *&lt;root&gt;/&lt;subproject&gt;/src/main/java*: Application/Library sources
 - *&lt;root&gt;/&lt;subproject&gt;/src/main/resources*:	Application/Library resources
 - *&lt;root&gt;/&lt;subproject&gt;/src/test/java*:	Test sources
 - *&lt;root&gt;/&lt;subproject&gt;/src/test/resources*:	Test resources
+- *&lt;root&gt;/&lt;subproject&gt;/gradle/*:	Gradle Wrapper (generated from Gradle build)
+- *&lt;root&gt;/&lt;subproject&gt;/gradlew*:	Gradle Wrapper start script (generated from Gradle build)
+- *&lt;root&gt;/&lt;subproject&gt;/gradlew.bat*:	Gradle Wrapper start script (generated from Gradle build)
 - *&lt;root&gt;/LICENSE.txt*:	Project's license
 - *&lt;root&gt;/README.txt*:	Project's readme
 
