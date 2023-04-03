@@ -16,7 +16,7 @@
 			<!-- Channel or ChannelSet may be specified -->
 			<Channel value="Channel_1"/>
 			<!-- Dictionary is optional: defaulted to "ChannelDictionary" -->
-			<Dictionary value="Dictionary_2"/>
+			<Dictionary value="Dictionary_1"/>
 			<XmlTraceToStdout value="0"/>
 		</Consumer>
 		

@@ -77,10 +77,10 @@ class AppClient implements OmmConsumerClient
 public class Consumer 
 {
 
-	static String serviceName = "DIRECT_FEED";
+	static String serviceName = "ELEKTRON_DD";
 	static String host = "localhost";
 	static String port = "14002";
-	static String userName = "GRADLE_EMA";
+	static String userName = "GRADLE_USER";
 	static String itemName = "/THB=";
 	static Logger logger = LoggerFactory.getLogger(Consumer.class);
 
