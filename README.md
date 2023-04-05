@@ -301,5 +301,25 @@ To clean up the build, you can just run a ```gradlew clean``` command to can del
 
 Please find more detail about Gradle command-line interface from [Gradle page](https://docs.gradle.org/7.3.3/userguide/command_line_interface.html#sec:command_line_completion).
 
+## <a id="gradle_running"></a>Build and Run Other Java Tasks
 
-TBD
+Running the main application with the ```gradlew run``` command is convenient. However, developers may need to run mutiple applications to start or test other services. It is not practical to keep changing the main class in ```application.mainClassName``` function of a ```build.gradle``` file. Luckyly, Gradle lets developer create custom tasks for various propose, including run others Java class.
+
+The best example is the official RTSDK Java Gradle project that supports various SDK samples such as  ```gradlew runconsumer100```, ```gradlew runiprovider180```, ```gradlew runVAConsumer```, etc.   
+
+
+``` Groovy
+task runCloudConsumer(type: JavaExec) {
+
+    dependsOn("compileJava")
+    classpath = sourceSets.main.runtimeClasspath
+    
+    mainClass = 'com.refinitiv.ema.examples.cloudconsumer.Consumer'
+
+    // arguments to pass to the application
+    args 'appArg1'
+}
+```
+
+
+TB
