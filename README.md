@@ -253,7 +253,7 @@ gradlew run
 Example:
 
 ``` Bash
-C:\drive_d\Project\Code\EMA_Java_Gradle>gradlew run
+$>gradlew run
 
 > Task :ema_app:run
 17:26:49.611 [main] INFO com.refinitiv.ema.access.OmmConsumerImpl -- loggerMsg
@@ -303,23 +303,74 @@ Please find more detail about Gradle command-line interface from [Gradle page](h
 
 ## <a id="gradle_running"></a>Build and Run Other Java Tasks
 
-Running the main application with the ```gradlew run``` command is convenient. However, developers may need to run mutiple applications to start or test other services. It is not practical to keep changing the main class in ```application.mainClassName``` function of a ```build.gradle``` file. Luckyly, Gradle lets developer create custom tasks for various propose, including run others Java class.
+Running the main application with the ```gradlew run``` command is convenient. However, developers may need to run mutiple applications to start or test other services at the same time. It is not practical to keep changing the main class in ```application.mainClassName``` function of a ```build.gradle``` file. So, how can we run multiple applications with less modification?
 
-The best example is the official RTSDK Java Gradle project that supports various SDK samples such as  ```gradlew runconsumer100```, ```gradlew runiprovider180```, ```gradlew runVAConsumer```, etc.   
+Fortunately, Gradle lets developer create [tasks](https://docs.gradle.org/7.3.3/dsl/org.gradle.api.Task.html) for various propose, including run others Java class. The best example is the official RTSDK Java ```build.gradle``` that supports various SDK samples via Gradle task such as  ```gradlew runconsumer100```, ```gradlew runiprovider180```, ```gradlew runVAConsumer```, etc.   
 
+While RTSDK Java's build.gradle uses complex script to support multiple tasks dynamically, this project uses a simple custom task for running Java application as follows
 
 ``` Groovy
 task runCloudConsumer(type: JavaExec) {
 
-    dependsOn("compileJava")
+    dependsOn('compileJava')
     classpath = sourceSets.main.runtimeClasspath
     
     mainClass = 'com.refinitiv.ema.examples.cloudconsumer.Consumer'
-
-    // arguments to pass to the application
-    args 'appArg1'
 }
 ```
+The ```runCloudConsumer``` task is defined as [type JavaExec](https://docs.gradle.org/7.3.3/dsl/org.gradle.api.tasks.JavaExec.html) for executing a Java application in a child process. Develops can set classpath, application class, and task properties in the task function.
+- *classpath*: The classpath for executing the main class.
+- *mainClass*: The fully qualified name of the Main class to be executed. I am using the ```com.refinitiv.ema.examples.cloudconsumer.Consumer``` which is based on EMA Java Consumer ex113_MP_SessionMgmt example.
+- *dependsOn('compileJava')*: Method is for setting this task to compile the project before running the class.
+
+You can run Gradle task with the ```gradlew [taskName...] [--option-name...]``` command. Please noted that it supports the ```--args=``` option too.
+
+Example:
+
+```Bash
+$>gradlew runCloudConsumer --args="-clientId %RTO_CLIENTID_V2% -clientSecret %RTO_CLIENTSECRET% -itemName /THB="
+
+> Task :ema_app:runCloudConsumer
+16:22:56.111 [main] INFO com.refinitiv.ema.access.OmmConsumerImpl -- loggerMsg
+    ClientName: ChannelCallbackClient
+    Severity: Info
+    Text:    Received ChannelUp event on channel Channel_4
+        Instance Name Consumer_4_1
+        Component Version ads3.5.4.E1.linux.rrg 64-bit
+loggerMsgEnd
 
 
-TB
+RefreshMsg
+    streamId="5"
+    domain="MarketPrice Domain"
+    solicited
+    RefreshComplete
+    state="Open / Ok / None / ''"
+    itemGroup="00 08"
+    permissionData="03 01 01 36 3c"
+    name="/THB="
+    nameType="1"
+    serviceId="257"
+    serviceName="ELEKTRON_DD"
+    Payload dataType="FieldList"
+        FieldList FieldListNum="99" DictionaryId="1"
+            FieldEntry fid="1" name="PROD_PERM" dataType="UInt" value="363"
+            FieldEntry fid="2" name="RDNDISPLAY" dataType="UInt" value="153"
+            FieldEntry fid="3" name="DSPLY_NAME" dataType="Rmtes" value="STONEX GROUP G/d"
+            FieldEntry fid="5" name="TIMACT" dataType="Time" value="08:51:00:000:000:000"
+            FieldEntry fid="11" name="NETCHNG_1" dataType="Real" value="0.00"
+            FieldEntry fid="12" name="HIGH_1" dataType="Real" value="34.15"
+            FieldEntry fid="13" name="LOW_1" dataType="Real" value="34.05"
+            FieldEntry fid="15" name="CURRENCY" dataType="Enum" value="764"
+            FieldEntry fid="17" name="ACTIV_DATE" dataType="Date" value="07 APR 2023"
+            FieldEntry fid="19" name="OPEN_PRC" dataType="Real" value="34.06"
+            FieldEntry fid="21" name="HST_CLOSE" dataType="Real" value="34.09"
+            FieldEntry fid="22" name="BID" dataType="Real" value="34.09"
+            FieldEntry fid="23" name="BID_1" dataType="Real" value="34.12"
+            FieldEntry fid="24" name="BID_2" dataType="Real" value="34.13"
+            FieldEntry fid="25" name="ASK" dataType="Real" value="34.14"
+            FieldEntry fid="26" name="ASK_1" dataType="Real" value="34.14"
+...
+```
+
+TBD

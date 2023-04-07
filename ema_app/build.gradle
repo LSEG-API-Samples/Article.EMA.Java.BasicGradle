@@ -71,7 +71,7 @@ jar {
 
 task runIProvider(type: JavaExec) {
 
-    dependsOn("compileJava")
+    dependsOn('compileJava')
     classpath = sourceSets.main.runtimeClasspath
     
     mainClass = 'com.refinitiv.ema.examples.iprovider.IProvider'
@@ -82,7 +82,7 @@ task runIProvider(type: JavaExec) {
 
 task runLocalConsumer(type: JavaExec) {
 
-    dependsOn("compileJava")
+    dependsOn('compileJava')
     classpath = sourceSets.main.runtimeClasspath
     
     mainClass = 'com.refinitiv.ema.examples.localconsumer.Consumer'
@@ -93,13 +93,10 @@ task runLocalConsumer(type: JavaExec) {
 
 task runCloudConsumer(type: JavaExec) {
 
-    dependsOn("compileJava")
+    dependsOn('compileJava')
     classpath = sourceSets.main.runtimeClasspath
     
     mainClass = 'com.refinitiv.ema.examples.cloudconsumer.Consumer'
-
-    // arguments to pass to the application
-    args 'appArg1'
 }
 
 
