@@ -175,7 +175,7 @@ include('ema_app')
 
 Note: If the project uses [Kotlin](https://kotlinlang.org/) DSL, this file is ```settings.gradle.kts```
 
-## <a id="gradle_config"></a>Gradle build file setting for EMA Java
+## <a id="gradle_ema"></a>Gradle build file setting for EMA Java
 
 Each subproject contains the ```build.gradle``` or ```build.gradle.kts``` file. It is the project's configuration. The file uses [Groovy](https://groovy-lang.org/) (default option) and [Kotlin](https://kotlinlang.org/) DSL format. 
 
@@ -372,5 +372,16 @@ RefreshMsg
             FieldEntry fid="26" name="ASK_1" dataType="Real" value="34.14"
 ...
 ```
+
+Please find more detail on the following resources:
+- [Gradle API: JavaExec page](https://docs.gradle.org/7.3.3/dsl/org.gradle.api.tasks.JavaExec.html)
+- [Gradle Task dependencies](https://docs.gradle.org/current/userguide/tutorial_using_tasks.html#sec:task_dependencies)
+- [Gradle Task](https://docs.gradle.org/7.3.3/dsl/org.gradle.api.Task.html)
+
+## <a id="gradle_3rdlib"></a>Integration with Other Java Library
+
+Like I have mentioned in the [Gradle build file setting for EMA Java](#gradle_config) section, developers can define dependencies setting in a ```build.gradle``` file
+
+## <a id="gradle_running"></a>Building Jar file
 
 TBD
