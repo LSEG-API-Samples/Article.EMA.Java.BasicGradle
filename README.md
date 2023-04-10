@@ -380,7 +380,38 @@ Please find more detail on the following resources:
 
 ## <a id="gradle_3rdlib"></a>Integration with Other Java Library
 
-Like I have mentioned in the [Gradle build file setting for EMA Java](#gradle_config) section, developers can define dependencies setting in a ```build.gradle``` file
+Like I have mentioned in the [Gradle build file setting for EMA Java](#gradle_config) section, developers can define 3rd party or other components dependencies setting in a ```build.gradle``` file. I am demonstratring by integrate the [Logback](https://logback.qos.ch/) loogging library (a successor to the [log4j](https://logging.apache.org/log4j/2.x/)) with the EMA Java Consumer application.
+
+The EMA uses the ETA Java ValueAdd API to bind the SLF4J logging mechanism with [Java Logging API](https://docs.oracle.com/javase/8/docs/technotes/guides/logging/overview.html) as a default logger. The Maven automatically downloads **slf4j-api** and **slf4j-jdk14** libraries for the application. Developers can perform the following steps to integrate the EMA Java application log with Logback framework. 
+1. Configure build.gradle file to not load slf4j-jdk14 library.
+2. Add Logback-Core and Logback-classic dependencies in build.gradle file.
+3. Configure Logback configurations file to Java classpath or JVM option.
+
+### Excluding slf4j-jdk14
+
+Developers can configure the dependency declaration to exclude the SLF4J-JDK14 library using [Configuration.exclude() method](https://docs.gradle.org/current/userguide/resolution_rules.html#excluding_a_dependency_from_a_configuration_completely) as follows.
+
+``` Groovy
+configurations {
+    implementation {
+        exclude group: 'org.slf4j', module: 'slf4j-jdk14'
+    }
+}
+```
+### Adding Logback
+
+``` Groovy
+// tag::dependencies[]
+dependencies {
+    // This dependency is used by the application.
+    implementation 'com.refinitiv.ema:ema:3.7.0.0'
+    implementation 'ch.qos.logback:logback-classic:1.4.6'
+    implementation 'ch.qos.logback:logback-core:1.4.6'
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+```
 
 ## <a id="gradle_running"></a>Building Jar file
 

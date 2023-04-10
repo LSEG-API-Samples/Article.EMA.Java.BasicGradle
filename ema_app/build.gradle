@@ -27,8 +27,14 @@ repositories {
     mavenCentral()
 }
 
-configurations.all {
-   exclude group: 'org.slf4j', module: 'slf4j-jdk14'
+// configurations.all {
+//    exclude group: 'org.slf4j', module: 'slf4j-jdk14'
+// }
+
+configurations {
+    implementation {
+        exclude group: 'org.slf4j', module: 'slf4j-jdk14'
+    }
 }
 
 // tag::dependencies[]
