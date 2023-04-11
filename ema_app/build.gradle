@@ -61,8 +61,6 @@ application {
 jar {
 	 manifest {
         attributes "Main-Class": 'com.refinitiv.ema.examples.localconsumer.Consumer'
-        //attributes "Main-Class": "chapters.introduction.HelloWorld2"
-        //attributes "Main-Class": "com.refinitiv.ema.examples.training.iprovider.series100.ex130_MP_UserDispatch.IProvider"
     }
 
     from {

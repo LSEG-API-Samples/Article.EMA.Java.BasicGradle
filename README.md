@@ -531,4 +531,39 @@ loggerMsgEnd
 
 ## <a id="gradle_running"></a>Building Jar file
 
+You can run the Gradle ```gradlew jar``` command to compile the project and build the applications jar file. The class and jar files will be available in the *&lt;root&gt;/&lt;subproject&gt;/build/lib* folder by default.
+
+However, this newly built jar file contains only the application class files, so you need to set the Java classpath to all required RTSDK jar files which store somewhere in your Gradle repository folder to run this jar file. To avoid this problem, you can customize the Jar task to to build the project and RTSDK library into a single-all-dependencies jar file as follows:
+
+``` Groovy
+jar {
+	 manifest {
+        attributes "Main-Class": 'com.refinitiv.ema.examples.localconsumer.Consumer'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    archiveBaseName = 'EMA_Java_Gradle_all'
+    archiveVersion =  version
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+}
+```
+
+Once you have run the Maven ```gradlew jar``` command, Maven will build a single-all-dependencies jar file named *EMA_Java_Gradle_all-1.0.jar* in the *&lt;root&gt;/&lt;subproject&gt;/build/lib* folder. 
+
+## <a id="ref"></a>References
+
+For further details, please check out the following resources:
+* [Refinitiv Real-Time SDK Java page](https://developers.refinitiv.com/en/api-catalog/refinitiv-real-time-opnsrc/rt-sdk-java) on the [Refinitiv Developer Community](https://developers.refinitiv.com/) web site.
+* [Refinitiv Real-Time SDK Family](https://developers.refinitiv.com/en/use-cases-catalog/refinitiv-real-time) page.
+* [Enterprise Message API Java Quick Start](https://developers.refinitiv.com/en/api-catalog/refinitiv-real-time-opnsrc/rt-sdk-java/quick-start)
+* [Developer Webinar: Introduction to Enterprise App Creation With Open-Source Enterprise Message API](https://www.youtube.com/watch?v=2pyhYmgHxlU)
+* [Developer Article: 10 important things you need to know before you write an Enterprise Real Time application](https://developers.refinitiv.com/article/10-important-things-you-need-know-you-write-elektron-real-time-application)
+
+
+For any question related to this article or RTSDK page, please use the Developer Community [Q&A Forum](https://community.developers.refinitiv.com/).
+
+
 TBD
