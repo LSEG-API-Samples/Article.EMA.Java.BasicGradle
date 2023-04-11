@@ -25,8 +25,8 @@ import com.refinitiv.ema.access.OmmException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-// import ch.qos.logback.classic.LoggerContext;
-// import ch.qos.logback.core.util.StatusPrinter;
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.core.util.StatusPrinter;
 
 
 class AppClient implements OmmConsumerClient
@@ -125,8 +125,8 @@ public class Consumer
 					// for (String s : args){
 					// 	System.out.println(s);
 					// }
-					// printHelp();
-					// return false;
+					printHelp();
+					return false;
 				}
 			}
 
@@ -142,7 +142,7 @@ public class Consumer
 
 	static void printHelp()
 	{
-		System.out.println("\nOptions:\n" + "  -?\tShows this usage\n"
+		logger.info("\nOptions:\n" + "  -?\tShows this usage\n"
 						   + "  -username DACS username(optional)\n"
 						   + "  -service RTDS or IProvider service name(optional)\n"
 						   + "  -host RTDS or IProvider hostname name or IP Address(optional)\n"

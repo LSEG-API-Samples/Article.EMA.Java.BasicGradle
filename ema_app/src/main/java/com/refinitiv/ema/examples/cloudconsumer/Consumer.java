@@ -28,8 +28,8 @@ import com.refinitiv.eta.codec.CodecReturnCodes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-// import ch.qos.logback.classic.LoggerContext;
-// import ch.qos.logback.core.util.StatusPrinter;
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.core.util.StatusPrinter;
 
 class AppClient implements OmmConsumerClient {
 
@@ -84,7 +84,7 @@ public class Consumer {
 	static Logger logger = LoggerFactory.getLogger(Consumer.class);
 
 	static void printHelp(){
-		System.out.println("\nOptions:\n" + "  -?\tShows this usage\n"
+		logger.info("\nOptions:\n" + "  -?\tShows this usage\n"
 						   + "  -username machine ID to perform authorization with the\r\n"
 						   + "\ttoken service (mandatory for V1 password credentials).\n"
 						   + "  -password password to perform authorization with the token \r\n"
@@ -165,9 +165,8 @@ public class Consumer {
 						}
 						catch(Exception e)
 						{
-							System.err.println("Error loading JWK file: " + e.getMessage());
-							System.err.println();
-							System.out.println("Consumer exits...");
+							logger.error("Error loading JWK file: {}\n", e.getMessage());
+							logger.info("Consumer exits...");
 							System.exit(CodecReturnCodes.FAILURE);
 						} 
 	            	}
@@ -284,7 +283,7 @@ public class Consumer {
 			}
 
 			if ( (userName == null || password == null || clientId == null) && (clientId == null || (clientSecret == null && clientJwk == null))){
-				System.out.println("Username, password, and clientId or clientId and clientSecret/jwkFile must be specified on the command line. Exiting...");
+				logger.info("Username, password, and clientId or clientId and clientSecret/jwkFile must be specified on the command line. Exiting...");
 				printHelp();
 				return false;
 			}
@@ -318,7 +317,7 @@ public class Consumer {
 			Thread.sleep(900000);			// API calls onRefreshMsg(), onUpdateMsg() and onStatusMsg()
 		}
 		catch (InterruptedException | OmmException excp) {
-			System.out.println(excp.getMessage());
+			logger.error(excp.getMessage());
 		}
 		finally {
 			if (consumer != null) consumer.uninitialize();

@@ -75,17 +75,6 @@ jar {
 }
 // end::jar[]
 
-task runIProvider(type: JavaExec) {
-
-    dependsOn('compileJava')
-    classpath = sourceSets.main.runtimeClasspath
-    
-    mainClass = 'com.refinitiv.ema.examples.iprovider.IProvider'
-
-    // arguments to pass to the application
-    args 'appArg1'
-}
-
 task runLocalConsumer(type: JavaExec) {
 
     dependsOn('compileJava')

@@ -303,11 +303,11 @@ Please find more detail about Gradle command-line interface from [Gradle page](h
 
 ## <a id="gradle_running"></a>Build and Run Other Java Tasks
 
-Running the main application with the ```gradlew run``` command is convenient. However, developers may need to run mutiple applications to start or test other services at the same time. It is not practical to keep changing the main class in ```application.mainClassName``` function of a ```build.gradle``` file. So, how can we run multiple applications with less modification?
+Running the main application with the ```gradlew run``` command is convenient. However, developers may need to run multiple applications to start or test other services at the same time. It is not practical to keep changing the main class in ```application.mainClassName``` function of a ```build.gradle``` file. So, how can we run multiple applications with less modification?
 
-Fortunately, Gradle lets developer create [tasks](https://docs.gradle.org/7.3.3/dsl/org.gradle.api.Task.html) for various propose, including run others Java class. The best example is the official RTSDK Java ```build.gradle``` that supports various SDK samples via Gradle task such as  ```gradlew runconsumer100```, ```gradlew runiprovider180```, ```gradlew runVAConsumer```, etc.   
+Fortunately, Gradle lets developers create [tasks](https://docs.gradle.org/7.3.3/dsl/org.gradle.api.Task.html) for various propose, including running others Java classes. The best example is the official RTSDK Java ```build.gradle``` that supports various SDK samples via Gradle task such as  ```gradlew runconsumer100```, ```gradlew runiprovider180```, ```gradlew runVAConsumer```, etc.   
 
-While RTSDK Java's build.gradle uses complex script to support multiple tasks dynamically, this project uses a simple custom task for running Java application as follows
+While RTSDK Java's build.gradle uses a complex script to support multiple tasks dynamically, this project uses a simple custom task for running Java applications as follows
 
 ``` Groovy
 task runCloudConsumer(type: JavaExec) {
@@ -318,12 +318,12 @@ task runCloudConsumer(type: JavaExec) {
     mainClass = 'com.refinitiv.ema.examples.cloudconsumer.Consumer'
 }
 ```
-The ```runCloudConsumer``` task is defined as [type JavaExec](https://docs.gradle.org/7.3.3/dsl/org.gradle.api.tasks.JavaExec.html) for executing a Java application in a child process. Develops can set classpath, application class, and task properties in the task function.
+The ```runCloudConsumer``` task is defined as [type JavaExec](https://docs.gradle.org/7.3.3/dsl/org.gradle.api.tasks.JavaExec.html) for executing a Java application in a child process. Develops can set the classpath, application class, and task properties in the task function.
 - *classpath*: The classpath for executing the main class.
 - *mainClass*: The fully qualified name of the Main class to be executed. I am using the ```com.refinitiv.ema.examples.cloudconsumer.Consumer``` which is based on EMA Java Consumer ex113_MP_SessionMgmt example.
 - *dependsOn('compileJava')*: Method is for setting this task to compile the project before running the class.
 
-You can run Gradle task with the ```gradlew [taskName...] [--option-name...]``` command. Please noted that it supports the ```--args=``` option too.
+You can run the Gradle task with the ```gradlew [taskName...] [--option-name...]``` command. Please noted that it supports the ```--args=``` option too.
 
 Example:
 
@@ -380,16 +380,9 @@ Please find more detail on the following resources:
 
 ## <a id="gradle_3rdlib"></a>Integration with Other Java Library
 
-Like I have mentioned in the [Gradle build file setting for EMA Java](#gradle_config) section, developers can define 3rd party or other components dependencies setting in a ```build.gradle``` file. I am demonstratring by integrate the [Logback](https://logback.qos.ch/) loogging library (a successor to the [log4j](https://logging.apache.org/log4j/2.x/)) with the EMA Java Consumer application.
+As I have mentioned in the [Gradle build file setting for EMA Java](#gradle_config) section, developers can define 3rd party or other components dependencies setting in a ```build.gradle``` file. I am demonstrating by integrating the [Logback](https://logback.qos.ch/) logging library (a successor to the [log4j](https://logging.apache.org/log4j/2.x/)) with the EMA Java Consumer application.
 
-The EMA uses the ETA Java ValueAdd API to bind the SLF4J logging mechanism with [Java Logging API](https://docs.oracle.com/javase/8/docs/technotes/guides/logging/overview.html) as a default logger. The Maven automatically downloads **slf4j-api** and **slf4j-jdk14** libraries for the application. Developers can perform the following steps to integrate the EMA Java application log with Logback framework. 
-1. Configure build.gradle file to not load slf4j-jdk14 library.
-2. Add Logback-Core and Logback-classic dependencies in build.gradle file.
-3. Configure Logback configurations file to Java classpath or JVM option.
-
-### Excluding slf4j-jdk14
-
-Developers can configure the dependency declaration to exclude the SLF4J-JDK14 library using [Configuration.exclude() method](https://docs.gradle.org/current/userguide/resolution_rules.html#excluding_a_dependency_from_a_configuration_completely) as follows.
+The EMA uses the ETA Java ValueAdd API to bind the [SLF4J](https://www.slf4j.org/) logging mechanism with [Java Logging API](https://docs.oracle.com/javase/8/docs/technotes/guides/logging/overview.html) as a default logger, so the build tool always automatically downloads **slf4j-api** and **slf4j-jdk14** libraries for the application. This is the reason developers need to configure build.gradle file to exclude the SLF4J-JDK14 library using [Configuration.exclude() method](https://docs.gradle.org/current/userguide/resolution_rules.html#excluding_a_dependency_from_a_configuration_completely) as follows.
 
 ``` Groovy
 configurations {
@@ -398,7 +391,8 @@ configurations {
     }
 }
 ```
-### Adding Logback
+
+Next, the application needs [SLF4J](https://www.slf4j.org/) and Logback-Core in addition to Logback-classic dependencies on the classpath to use the Logback. The SLF4J is already loaded by the EMA-ETA dependency, developers can declare only Logback-related dependencies as shown below.
 
 ``` Groovy
 // tag::dependencies[]
@@ -408,9 +402,131 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.4.6'
     implementation 'ch.qos.logback:logback-core:1.4.6'
 
-    // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
 }
+```
+
+Moving on to the next step, modified the *cloudconsumer* code to log messages with Logback (intead of the  ```System.out.println``` method) as the following example:
+
+``` Java
+
+package com.refinitiv.ema.examples.cloudconsumer;
+
+........
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.core.util.StatusPrinter;
+
+class AppClient implements OmmConsumerClient {
+
+	Logger logger = LoggerFactory.getLogger(AppClient.class);
+
+	AppClient(){
+		logger.info("Starting {}", AppClient.class.getSimpleName());
+	}
+
+	public void onRefreshMsg(RefreshMsg refreshMsg, OmmConsumerEvent event){
+		if (refreshMsg.hasName())
+			logger.info("Getting Refresh Response Message, Item Name: {}", refreshMsg.name());
+		
+		if (refreshMsg.hasServiceName())
+			logger.info("Service Name: {}", refreshMsg.serviceName());
+		
+		logger.info("Item State:  {}", refreshMsg.state());
+		logger.info("Refresh Response Message \n{}",refreshMsg);
+	}
+    ...
+}
+...
+public class Consumer {
+
+    ...
+
+	static Logger logger = LoggerFactory.getLogger(Consumer.class);
+    ...
+    public static void main(String[] args){
+		OmmConsumer consumer = null;
+
+		logger.info("Starting {}", Consumer.class.getSimpleName());
+        ...
+    }
+}
+```
+The last step of this section is creating a ```logback.xml``` configuration file as the following example
+
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_DIR" value="./logs/" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder>
+        <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+      </encoder>
+    </appender>
+    
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+      <file>${LOG_DIR}/api.log</file>
+      <append>true</append>
+      <encoder>
+          <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+      </encoder>
+  </appender>
+
+  <root name="com.refinitiv.ema" level="TRACE">
+      <appender-ref ref="FILE" /> 
+  </root>
+
+  <root name="com.refinitiv.ema" level="INFO">
+      <appender-ref ref="STDOUT" />
+  </root>
+
+  <!-- RestReactor -->
+  <root name="com.refinitiv.eta.valueadd" level="TRACE">
+    <appender-ref ref="FILE" /> 
+  </root>
+</configuration>
+```
+
+You can store the file at *&lt;root&gt;/&lt;subproject&gt;/src/main/resources* location, which makes Gradle automatically add Logback configurations file to the Java classpath on run time.
+
+Example:
+
+``` Bash
+$>gradlew runCloudConsumer --args="-clientId %RTO_CLIENTID_V2% -clientSecret %RTO_CLIENTSECRET% -itemName META.O"
+
+> Task :ema_app:runCloudConsumer
+15:09:56.696 [main] INFO  c.r.e.e.cloudconsumer.Consumer - Starting Consumer
+15:09:56.880 [main] INFO  c.r.e.e.cloudconsumer.AppClient - Starting AppClient
+15:09:56.983 [main] TRACE c.r.ema.access.OmmConsumerImpl - loggerMsg
+    ClientName: Consumer_4_1
+    Severity: Trace
+    Text:    Print out active configuration detail.
+         itemCountHint: 100000
+         serviceCountHint: 513
+         requestTimeout: 15000
+...
+
+15:09:59.241 [main] TRACE c.r.eta.valueadd.reactor.RestReactor - The next HTTP request was sent
+POST https://api.refinitiv.com/auth/oauth2/v2/token HTTP/1.1
+    No proxy is used
+    ContentLength: 141
+    Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+    Content of request:
+        grant_type: client_credentials
+        client_id: <*** client_id ***>
+        scope: trapi.streaming.pricing.read
+        client_secret: <*** client_secret ***>
+ ...
+
+15:10:02.863 [main] TRACE c.r.ema.access.OmmConsumerImpl - loggerMsg
+    ClientName: ItemCallbackClient
+    Severity: Trace
+    Text:    Added Item 1 of StreamId 5 to item map
+        Instance name Consumer_4_1
+loggerMsgEnd
+...
+
 ```
 
 ## <a id="gradle_running"></a>Building Jar file
