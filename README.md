@@ -54,7 +54,6 @@ $> gradlew run
 
 Before I am going further, there is some prerequisite, dependencies software, and libraries that the project is needed.
 
-
 ### Java SDK
 
 Firstly, you need Java SDK. Please check for the supported Java version from the [API Compatibility Matrix](https://developers.refinitiv.com/en/api-catalog/refinitiv-real-time-opnsrc/rt-sdk-java/documentation#api-compatibility-matrix) page. 
@@ -178,6 +177,7 @@ Note: If the project uses [Kotlin](https://kotlinlang.org/) DSL, this file is ``
 ## <a id="gradle_ema"></a>Gradle build file setting for EMA Java
 
 Each subproject contains the ```build.gradle``` or ```build.gradle.kts``` file. It is the project's configuration. The file uses [Groovy](https://groovy-lang.org/) (default option) and [Kotlin](https://kotlinlang.org/) DSL format. 
+* Note: Starting from Gradle version 8.2, Gradle will use [Kotlin as a defautl language](https://blog.gradle.org/kotlin-dsl-is-now-the-default-for-new-gradle-builds) when developers create new projects.
 
 The file contains all project configurations such as project type, Application main class, Java compilation options, etc. The equivalent file in Maven is the ```pom.xml``` file. 
 
@@ -288,6 +288,9 @@ RefreshMsg
             FieldEntry fid="13" name="LOW_1" dataType="Real" value="34.17"
             ....
 ```
+
+![Alt text](images/02_gradle_run.gif)
+
 ### How to parse parameters to the application. 
 
 My current main class is ```com.refinitiv.ema.examples.localconsumer.Consumer``` which is based on the EMA Java Consumer ex100_MP_Streaming example. The application connects and consumes real-time streaming data with the service *ELEKTRON_DD* from the RTDS or Interactive Provider application in the same machine (*localhost*) by default. However, I have modified it to receive the server IP Address/Hostname, RSSL Port, Service Name, Item Name, and DACS username via command-line arguments. So, how can developers parse parameters to the application via the ```gradlew run``` command? 
@@ -328,7 +331,7 @@ You can run the Gradle task with the ```gradlew [taskName...] [--option-name...]
 Example:
 
 ```Bash
-$>gradlew runCloudConsumer --args="-clientId %RTO_CLIENTID_V2% -clientSecret %RTO_CLIENTSECRET% -itemName /THB="
+$>gradlew runCloudConsumer --args="-clientId $RTO_CLIENTID_V2 -clientSecret $RTO_CLIENTSECRET% -itemName /THB="
 
 > Task :ema_app:runCloudConsumer
 16:22:56.111 [main] INFO com.refinitiv.ema.access.OmmConsumerImpl -- loggerMsg
@@ -531,7 +534,7 @@ loggerMsgEnd
 
 ## <a id="gradle_running"></a>Building Jar file
 
-You can run the Gradle ```gradlew jar``` command to compile the project and build the applications jar file. The class and jar files will be available in the *&lt;root&gt;/&lt;subproject&gt;/build/lib* folder by default.
+To distribute the application, you can run the Gradle ```gradlew jar``` command to compile the project and build the applications jar file. The jar files will be available in the *&lt;root&gt;/&lt;subproject&gt;/build/lib* folder by default.
 
 However, this newly built jar file contains only the application class files, so you need to set the Java classpath to all required RTSDK jar files which store somewhere in your Gradle repository folder to run this jar file. To avoid this problem, you can customize the Jar task to to build the project and RTSDK library into a single-all-dependencies jar file as follows:
 
@@ -551,7 +554,45 @@ jar {
 }
 ```
 
-Once you have run the Maven ```gradlew jar``` command, Maven will build a single-all-dependencies jar file named *EMA_Java_Gradle_all-1.0.jar* in the *&lt;root&gt;/&lt;subproject&gt;/build/lib* folder. 
+Once you have run the Gradle ```gradlew jar``` command, Gradel builds a single-all-dependencies jar file named *EMA_Java_Gradle_all-1.0.jar* in the *&lt;root&gt;/&lt;subproject&gt;/build/lib* folder. 
+
+## <a id="running"></a>Running the demo applications
+
+If your environment does not have the Gradle installed, please follow the [Gradle installation guide document](https://gradle.org/install/) for more detail.
+
+### Running the Cloud Consumer application
+
+Please contact your Refinitiv's representative to help you to access the RTO account and services. 
+
+To run the Cloud example, open the project folder in the command prompt and then run the following command:
+
+Version 1 Authentication:
+``` bash
+gradlew runCloudConsumer --args="-username $RTO_MACHINEID -password $RTO_PASSWORD -clientId $RTO_CLIENTID -itemName $RIC"
+```
+
+Version 2 Authentication:
+``` bash
+gradlew runCloudConsumer --args="-clientId $RTO_CLIENTID_V2 -clientSecret $CLIENTSECRET -itemName $RIC"
+```
+
+![Alt text](images/03_gradle_cloud_run.gif)
+
+### Running the Local Consumer application
+
+Please contact your Market data team to help you to access the RTDS account and services. 
+
+To run the Local example, open the project folder in the command prompt and then run the following command: 
+
+``` bash
+gradlew run --args="-service $SERVICE_NAME -itemName $RIC"
+```
+
+Note: The default service name is *ELEKTRON_DD*.
+
+## <a id="conclusion"></a>Conclusion
+
+The RTSDK Java is now available in [Maven central repository](https://search.maven.org/) which makes Java developers can implement the Real-Time application with the build automation tools such as [Apache Maven](https://maven.apache.org/), [Gradle](https://gradle.org/), or even the dependency manager tool like [Apache Ivy](https://ant.apache.org/ivy/). This will helps Java developers reduce the complexity of maintaining jar file dependencies, standardized project structure, easily manage the development environment among peers, and support various build processes that match developers' workflow. 
 
 ## <a id="ref"></a>References
 
