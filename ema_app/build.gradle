@@ -22,7 +22,7 @@ compileJava {
 version = '1.0'
 
 repositories {
-    // Use jcenter for resolving dependencies.
+    // Use maven central for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     mavenCentral()
 }
