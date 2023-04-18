@@ -20,7 +20,7 @@ Note:
 
 ## <a id="why_gradle"></a>Why you need build automation tool
 
-The modern Java build automation tools help developers to automate the software build and project management processes including compiling, dependency manager, packing, and running tests. 
+So, I will start off with the reason the Java development teams need the build automation tool. The modern Java build automation tools help developers to automate the software build and project management processes including compiling, dependency manager, packing, and running tests. 
 
 If you want to manage the EMA Java application project manually (the old way), you need to manage total **26 jar files** (*as of April 2023*) required by the API as follows:
 
@@ -48,9 +48,11 @@ And it lets developers compile, run, and test the application easier command.
 ``` Bash
 $> gradlew run
 ```
+Based on the example above, I think you get the idea of how the build automation tool organizes the project.
+
 ## <a id="prerequisite"></a>Prerequisite
 
-Before I am going further, there is some prerequisite, dependencies software, and libraries that the project is needed.
+Before I am going further, there is some prerequisite, dependencies, and libraries that the project is needed.
 
 ### Java SDK
 
@@ -88,6 +90,8 @@ Note: This is for the *CloudConsumer* example only.
 ### Access to Refinitiv Real-Time Distribution System
 
 Note: This is for the *LocalConsumer* example only. Please contact your Market Data team to help you with the Refinitiv Real-Time Distribution System (RTDS).
+
+That covers the project's prerequisite
 
 ## <a id="devarticle"></a>Development Detail
 

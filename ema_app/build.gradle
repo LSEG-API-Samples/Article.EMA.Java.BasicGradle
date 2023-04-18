@@ -41,7 +41,6 @@ configurations {
 dependencies {
     // This dependency is used by the application.
     implementation 'com.refinitiv.ema:ema:3.7.0.0'
-    //implementation 'com.refinitiv.eta.valueadd:etaValueAdd:3.7.0.0' 
     implementation 'ch.qos.logback:logback-classic:1.4.6'
     implementation 'ch.qos.logback:logback-core:1.4.6'
 
@@ -53,8 +52,6 @@ dependencies {
 application {
     // Define the main class for the application
     mainClassName = 'com.refinitiv.ema.examples.localconsumer.Consumer'
-    //mainClassName = 'chapters.introduction.HelloWorld2'
-    //mainClassName = 'com.refinitiv.ema.examples.training.iprovider.series100.ex130_MP_UserDispatch.IProvider'
 }
 
 // tag::jar[]
