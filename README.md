@@ -608,9 +608,14 @@ For further details, please check out the following resources:
 * [Enterprise Message API Java Quick Start](https://developers.refinitiv.com/en/api-catalog/refinitiv-real-time-opnsrc/rt-sdk-java/quick-start)
 * [Developer Webinar: Introduction to Enterprise App Creation With Open-Source Enterprise Message API](https://www.youtube.com/watch?v=2pyhYmgHxlU)
 * [Developer Article: 10 important things you need to know before you write an Enterprise Real Time application](https://developers.refinitiv.com/article/10-important-things-you-need-know-you-write-elektron-real-time-application)
+* [Changes to Customer Access and Identity Management: Refinitiv Real-Time - Optimized](https://developers.refinitiv.com/en/article-catalog/article/changes-to-customer-access-and-identity-management--refinitiv-re)
+* [Gradle Official website](https://gradle.org/)
+* [Gradle Getting Started Guide](https://docs.gradle.org/7.3.3/userguide/getting_started.html)
+* [Gradle Building Java Applications Sample](https://docs.gradle.org/current/samples/sample_building_java_applications.html)
+* [Gradle: Migrating Builds From Apache Maven](https://docs.gradle.org/7.3.3/userguide/migrating_from_maven.html)
+* [Gradle vs Maven Comparison](https://gradle.org/maven-vs-gradle/)
+* [Logback Official website](https://logback.qos.ch/)
+* [A Guide To Logback website](https://www.baeldung.com/logback)
 
 
-For any question related to this article or RTSDK page, please use the Developer Community [Q&A Forum](https://community.developers.refinitiv.com/).
-
-
-TBD
+For any question related to this article or the RTSDK page, please use the Developer Community [Q&A Forum](https://community.developers.refinitiv.com/).
