@@ -562,7 +562,7 @@ If your environment does not have the Gradle installed, please follow the [Gradl
 
 ### Running the Cloud Consumer application
 
-Please contact your Refinitiv's representative to help you to access the RTO account and services. 
+Please contact your Refinitiv representative to help you to access the RTO account and services. 
 
 To run the Cloud example, open the project folder in the command prompt and then run the following command:
 
@@ -592,7 +592,13 @@ Note: The default service name is *ELEKTRON_DD*.
 
 ## <a id="conclusion"></a>Conclusion
 
-The RTSDK Java is now available in [Maven central repository](https://search.maven.org/) which makes Java developers can implement the Real-Time application with the build automation tools such as [Apache Maven](https://maven.apache.org/), [Gradle](https://gradle.org/), or even the dependency manager tool like [Apache Ivy](https://ant.apache.org/ivy/). This will helps Java developers reduce the complexity of maintaining jar file dependencies, standardized project structure, easily manage the development environment among peers, and support various build processes that match developers' workflow. 
+The RTSDK Java comes with Gradle supported by default. The library is also available in [Maven central repository](https://search.maven.org/). This makes Java developers can implement the Real-Time application with [Gradle](https://gradle.org/) or other the build automation tools like [Apache Maven](https://maven.apache.org/), or even the dependency manager tool like [Apache Ivy](https://ant.apache.org/ivy/). The tool helps Java developers reduce the complexity of maintaining jar file dependencies, standardized project structure, easily manage the development environment, and support various build processes that match developers' workflow. 
+
+When compared to Maven, the Gradle advantages are highly customizable builds, better performance/faster build time, and support for multi-project builds, and developers may prefer Groovy/Kotlin DSL style configuration over the XML file like Maven. 
+
+In contrast, the Maven is easier to learn when compared with the Gradle, and has larger documents and resources from both official and user-based websites. 
+
+It is based on the developers' preferences to choose Gradle or Maven (or others) as a main build tool, as long as it supports the Maven central repository, developers can use the RTSDK Java with it.
 
 ## <a id="ref"></a>References
 
