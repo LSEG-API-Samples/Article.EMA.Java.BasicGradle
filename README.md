@@ -48,7 +48,7 @@ And it lets developers compile, run, and test the application easier command.
 ``` Bash
 $> gradlew run
 ```
-## Prerequisite
+## <a id="prerequisite"></a>Prerequisite
 
 Before I am going further, there is some prerequisite, dependencies software, and libraries that the project is needed.
 

@@ -6,7 +6,9 @@
 
 Gradle is the official build tool for the Android development platform. 
 
-## <a id="gradle_layout"></a>Project Sturcture 
+![Alt text](images/01_gradle.png)
+
+## <a id="gradle_layout"></a>Project Structure  
 
 Gradle is designed for multi-projects development. A recommended structure consists of one root project, and one or more subprojects (the [RTSDK Java](https://github.com/Refinitiv/Real-Time-SDK/tree/master/Java) uses the same structure too). This project folder diagram is as follow:
 
