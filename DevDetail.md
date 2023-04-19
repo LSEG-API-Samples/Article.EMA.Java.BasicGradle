@@ -1,4 +1,4 @@
-# How to Set Up Enterprise Message API Java Application with Gradle: Development Detail
+# Building Enterprise Message API Java Application with Gradle in a Simple way
 
 ## <a id="what_gradle"></a>What is Gradle?
 
