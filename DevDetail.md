@@ -142,7 +142,7 @@ dependencies {
 }
 ```
 
-The ```repositories``` function specifies where to look for the module that we declare as dependencies.  The ```dependencies``` specifies the libraries' IDs and the ```implementation``` property means the project uses EMA for both compilation and runtime.
+The ```repositories``` function specifies where to look for the module that we declare as dependencies.  The ```dependencies``` function specifies the libraries' IDs and the ```implementation``` property means the project uses EMA for both compilation and runtime.
 
 Please see more detail on the following pages:
 - [Build Java and JVM projects](https://docs.gradle.org/7.3.3/userguide/building_java_projects.html)
@@ -223,7 +223,7 @@ Please find more detail about Gradle command-line interface from [Gradle page](h
 
 Running the main application with the ```gradlew run``` command is convenient. However, developers may need to run multiple applications to start or test other services at the same time. It is not practical to keep changing the main class in ```application.mainClassName``` function of a ```build.gradle``` file. So, how can we run multiple applications with less modification?
 
-Fortunately, Gradle lets developers create [tasks](https://docs.gradle.org/7.3.3/dsl/org.gradle.api.Task.html) for various propose, including running others Java classes. The best example is the official RTSDK Java ```build.gradle``` that supports various SDK samples via Gradle task such as  ```gradlew runconsumer100```, ```gradlew runiprovider180```, ```gradlew runVAConsumer```, etc.   
+Fortunately, Gradle lets developers create [tasks](https://docs.gradle.org/7.3.3/dsl/org.gradle.api.Task.html) for various propose, including running others Java classes. The best example is the official RTSDK Java ```build.gradle``` files that supports various SDK samples via Gradle task such as  ```gradlew runconsumer100```, ```gradlew runiprovider180```, ```gradlew runVAConsumer```, etc.   
 
 While RTSDK Java's build.gradle uses a complex script to support multiple tasks dynamically, this project uses a simple custom task for running Java applications as follows
 
