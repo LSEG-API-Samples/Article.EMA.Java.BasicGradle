@@ -24,7 +24,7 @@ So, I will start off with the reason the Java development teams need the build a
 
 If you want to manage the EMA Java application project manually (the old way), you need to manage total **26 jar files** (*as of April 2023*) required by the API as follows:
 
-![Alt text](images/01_jars_files.png)
+![figure-1](images/01_jars_files.png)
 
 And developers need to add all jar files to the classpath when running the EMA Java application manually like the following example 
 
@@ -99,7 +99,7 @@ Please check [How to Set Up Enterprise Message API Java Application with Gradle:
 
 ## <a id="running"></a>Running the demo applications
 
-If your environment does not have the Gradle installed, please follow the [Gradle installation guide document](https://gradle.org/install/) for more detail.
+My next point is how to run the demo applications. Please see the instructions for each scenario below.
 
 ### Running the Cloud Consumer application
 
@@ -117,7 +117,7 @@ Version 2 Authentication:
 gradlew runCloudConsumer --args="-clientId $RTO_CLIENTID_V2 -clientSecret $CLIENTSECRET -itemName $RIC"
 ```
 
-![Alt text](images/03_gradle_cloud_run.gif)
+![figure-2](images/03_gradle_cloud_run.gif)
 
 ### Running the Local Consumer application
 
@@ -133,13 +133,13 @@ Note: The default service name is *ELEKTRON_DD*.
 
 ## <a id="conclusion"></a>Conclusion
 
-The RTSDK Java comes with Gradle supported by default. The library is also available in [Maven central repository](https://search.maven.org/). This makes Java developers can implement the Real-Time application with [Gradle](https://gradle.org/) or other the build automation tools like [Apache Maven](https://maven.apache.org/), or even the dependency manager tool like [Apache Ivy](https://ant.apache.org/ivy/). The tool helps Java developers reduce the complexity of maintaining jar file dependencies, standardized project structure, easily manage the development environment, and support various build processes that match developers' workflow. 
+Now we come to the conclusion of this EMA Java and Gradle article. The RTSDK Java comes with Gradle supported by default. The library is also available in [Maven central repository](https://search.maven.org/). This makes Java developers can implement the Real-Time application with [Gradle](https://gradle.org/) or other the build automation tools like [Apache Maven](https://maven.apache.org/), or even the dependency manager tool like [Apache Ivy](https://ant.apache.org/ivy/). The tool helps Java developers reduce the complexity of maintaining jar file dependencies, standardized project structure, easily manage the development environment, and support various build processes that match developers' workflow. 
 
 When compared to Maven, the Gradle advantages are highly customizable builds, better performance/faster build time, and support for multi-project builds, and developers may prefer Groovy/Kotlin DSL style configuration over the XML file like Maven. 
 
 In contrast, the Maven is easier to learn when compared with the Gradle, and has larger documents and resources from both official and user-based websites. 
 
-It is based on the developers' preferences to choose Gradle or Maven (or others) as a main build tool, as long as it supports the Maven central repository, developers can use the RTSDK Java with it.
+Before I finish, let me just say รt is based on the developers' preferences to choose Gradle or Maven (or others) as a main build tool. If the tool supports the Maven central repository, developers can use the RTSDK Java with their project.
 
 ## <a id="ref"></a>References
 
@@ -157,6 +157,7 @@ For further details, please check out the following resources:
 * [Gradle vs Maven Comparison](https://gradle.org/maven-vs-gradle/)
 * [Logback Official website](https://logback.qos.ch/)
 * [A Guide To Logback website](https://www.baeldung.com/logback)
+* [Using Gradle and Visual Studio Code with RT-SDK Java examples](https://developers.refinitiv.com/en/article-catalog/article/gradle-with-vs-code-for-refinitiv-realtime-skd-java)
 
 
 For any question related to this article or the RTSDK page, please use the Developer Community [Q&A Forum](https://community.developers.refinitiv.com/).

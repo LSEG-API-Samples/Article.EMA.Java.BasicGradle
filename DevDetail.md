@@ -6,7 +6,7 @@
 
 Gradle is the official build tool for the Android development platform. 
 
-![Alt text](images/01_gradle.png)
+![figure-1](images/01_gradle.png)
 
 ## <a id="gradle_layout"></a>Project Structure  
 
@@ -204,7 +204,7 @@ RefreshMsg
             ....
 ```
 
-![Alt text](images/02_gradle_run.gif)
+![figure-2](images/02_gradle_run.gif)
 
 ### How to parse parameters to the application. 
 
@@ -474,3 +474,9 @@ jar {
 ```
 
 Once you have run the Gradle ```gradlew jar``` command, Gradel builds a single-all-dependencies jar file named *EMA_Java_Gradle_all-1.0.jar* in the *&lt;root&gt;/&lt;subproject&gt;/build/lib* folder. 
+
+That covers how to create a jar file.
+
+## <a id="devarticle"></a>Development Detail
+
+Please check the [Running the demo applications](./README.md#running) section of the [README.md](./README.md) file.
