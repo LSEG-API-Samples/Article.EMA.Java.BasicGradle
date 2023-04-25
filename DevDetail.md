@@ -92,7 +92,7 @@ That’s all I have to say about the settings.gradle file.
 ## <a id="gradle_ema"></a>Gradle build file setting for EMA Java
 
 That brings us to the subproject configuration. Each subproject contains the ```build.gradle``` or ```build.gradle.kts``` file. It is the project's configuration. The file uses [Groovy](https://groovy-lang.org/) (default option) and [Kotlin](https://kotlinlang.org/) DSL format. 
-* Note: Starting from Gradle version 8.2, Gradle will use [Kotlin as a defautl language](https://blog.gradle.org/kotlin-dsl-is-now-the-default-for-new-gradle-builds) when developers create new projects.
+* Note: Starting from Gradle version 8.2, Gradle will use [Kotlin as a default language](https://blog.gradle.org/kotlin-dsl-is-now-the-default-for-new-gradle-builds) when developers create new projects.
 
 The file contains all project configurations such as project type, Application main class, Java compilation options, etc. The equivalent file in Maven is the ```pom.xml``` file. 
 
@@ -120,7 +120,7 @@ application {
 
 The brief information of each ```build.gradle``` configuration function are as follows:
 - ```plugins```: Set the project type to Gradle for applying specific features (like compiling Java Code). This is a Java project that creates an executable JVM application, so I am setting *java* and *application* plugins
-- ```compileJava```: Set the compiler option. I am setting ```options.release = 11``` for targetting the compiled class(s) to compatible with Java 11
+- ```compileJava```: Set the compiler option. I am setting ```options.release = 11``` for targeting the compiled class(es) to compatible with Java 11
 - ```version```: Set the project version 
 - ```application```: Set the *application* plugin properties. I am setting the project main class as *com.refinitiv.ema.examples.localconsumer.Consumer* which is based on the EMA Java Consumer 100 example.
 

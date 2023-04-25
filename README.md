@@ -139,7 +139,7 @@ When compared to Maven, the Gradle advantages are highly customizable builds, be
 
 In contrast, the Maven is easier to learn when compared with the Gradle, and has larger documents and resources from both official and user-based websites. 
 
-Before I finish, let me just say รt is based on the developers' preferences to choose Gradle or Maven (or others) as a main build tool. If the tool supports the Maven central repository, developers can use the RTSDK Java with their project.
+Before I finish, let me just say it is based on the developers' preferences to choose Gradle or Maven (or others) as a main build tool. If the tool supports the Maven central repository, developers can use the RTSDK Java with their project.
 
 ## <a id="ref"></a>References
 
