@@ -118,7 +118,7 @@ application {
 
 ```
 
-The brief information of each ```build.gradle``` configuration function are as follows:
+The brief information of each ```build.gradle``` configuration function is as follows:
 - ```plugins```: Set the project type to Gradle for applying specific features (like compiling Java Code). This is a Java project that creates an executable JVM application, so I am setting *java* and *application* plugins
 - ```compileJava```: Set the compiler option. I am setting ```options.release = 11``` for targeting the compiled class(es) to compatible with Java 11
 - ```version```: Set the project version 
